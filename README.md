@@ -17,8 +17,44 @@ I have Kronaby watch and I want to enhance the webhook triggering feature to the
 
 #### My watch is Apex 43mm. Firmware version is `20180911.01.03` and I found no way to update it.
 
+# 4. Observation
 
-# 4. Protocol reference
+## Watch can send events:
+
+* Top pusher
+  * Single short press `0x 81-08-92-00-01`
+  * Double short press `0x 81-08-92-00-03`
+  * Triple short press `0x 81-08-92-00-04`
+  * Quadruple short press `0x 81-08-92-00-05`
+  * Long press start `0x 81-08-92-00-02`
+  * Long press end `0x 81-08-92-00-0C`
+  * Single short + Long press start `0x 81-08-92-00-06`
+  * Double short press + Long press start `0x 81-08-92-00-07`
+  * Triple short press * Long press start `0x 81-08-92-00-08`
+* Crown
+  * Single short press `0x 81-08-92-01-01`
+  * Double short press `0x 81-08-92-01-03`
+  * Triple short press `0x 81-08-92-01-04`
+  * Quadruple short press `0x 81-08-92-01-05`
+  * Long press start `0x 81-08-92-01-02`
+  * Find my phone `long press for 3 sec` `0x 81-08-92-01-0B`
+  * Long press end `0x 81-08-92-01-0C`
+  * Single short + Long press start `0x 81-08-92-01-06`
+  * Double short press + Long press start `0x 81-08-92-01-06`
+  * Triple short press * Long press start `0x 81-08-92-01-07`
+* Bottom pusher
+  * Single short press `0x 81-08-92-02-01`
+  * Double short press `0x 81-08-92-02-03`
+  * Triple short press `0x 81-08-92-02-04`
+  * Quadruple short press `0x 81-08-92-02-05`
+  * Long press start `0x 81-08-92-02-02`
+  * Long press end `0x 81-08-92-01-0C`
+  * Single short + Long press start `0x 81-08-92-00-06`
+  * Double short press + Long press start `0x 81-08-92-02-06`
+  * Triple short press * Long press start `0x 81-08-92-02-07` 
+
+
+# 5. Protocol reference
 
 On application layer protocol supports following commands:
 
