@@ -109,11 +109,13 @@ On application layer protocol supports following commands:
 *Assumption*: Stops watch hands from continuous movement after pairing and connection.
 
 ## `config_base`
-*Assumption*: Sends 2 parameters to the watch:
+*Assumption*: Sends list of 4 values to the watch:
 
 * Time resolution in minutes - integers
 	*Assumption*: period between sending steps count from watch to phone
 * Enable step counter - boolean
+* Unknown1 - boolean/integer
+* Unknown2 - boolean/integer
 
 ## `status_buildinfo`
 
@@ -151,7 +153,18 @@ On application layer protocol supports following commands:
 
 ## `datetime`
 
-*Assumption*: Sends date and time to the watch
+*Confirmed*: Sends date and time to the watch
+
+* Year - YYYY
+* month - 1 - 12
+* day of month - 1 - 31
+* hour 0 - 23
+* minutes 0 - 59
+* seconds 0 - 59
+* day of week - 0 - 6
+
+
+
 
 ## `weekly_sync`
 
