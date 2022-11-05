@@ -102,6 +102,7 @@ On application layer protocol supports following commands:
 | 39 | [`auto_edst`](#auto_edst)|
 | 40 | [`dfu_ready`](#dfu_ready)|
 | 41 | [`config_debug`](#config_debug)|
+| 71 | [`command_71`](#command_71)
 
 
 ## `map_cmd`
@@ -166,17 +167,15 @@ On application layer protocol supports following commands:
 * day of week - 0 - 6
 
 
-
-
 ## `weekly_sync`
 
 ## `periodic`
 
 ## `forget_device`
 
-*Assumption*: tells watch to unpair from current phone
+Tells watch to unpair from current phone
 
-Example: `{"23": 0}`
+Example: `811700` - `{23:0}`
 
 ## `conn_int_change`
 
@@ -217,3 +216,41 @@ Example: `{"23": 0}`
 ## `dfu_ready`
 
 ## `config_debug`
+
+## `command_71`
+
+Hand position adjustment
+
+Minute hand clockwise adjust (+1)
+
+`814793000101` - `{ 71: [0,1,1] }`
+
+Minute hand counter-clockwise adjust (-1)
+
+`8147930001ff` - `{ 71:[0,1,-1] }`
+
+Hour hand clockwise adjust (+1)
+
+`814793000001` - `{ 71: [0,1,1] }`
+
+Hour hand counter-clockwise adjust (-1)
+
+`8147930000ff` - `{ 71:[0,1,-1] }`
+
+
+Right dial hand counter-clockwise adjust
+
+`8147930100ff` - `{ 71: [1,0,-1] }`
+
+Right dial hand clockwise adjust
+
+`814793010001` - `{ 71: [1,0,1] }`
+
+
+Left dial hand counter-clockwise adjust
+
+`8147930200ff` - `{ 71: [2,0,-1] }`
+
+Left dial hand clockwise adjust
+
+`814793020001` - `{ 71: [2,0,1] }`
