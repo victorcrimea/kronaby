@@ -176,6 +176,8 @@ On application layer protocol supports following commands:
 
 *Assumption*: tells watch to unpair from current phone
 
+Example: `{"23": 0}`
+
 ## `conn_int_change`
 
 ## `rssi`
