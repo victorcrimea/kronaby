@@ -219,7 +219,21 @@ Example: `811700` - `{23:0}`
 
 ## `command_71`
 
-Hand position adjustment
+Hand position adjustment.
+
+* Argument 1: dial number, range [0:2]
+  * 0 - main dial
+  * 1 - right dial on Apex
+  * 2 - left dial on Apex
+* Argument 2: hand number, range [0:1]
+  * 0 - hour hand (or sole hand if dial has only one)
+  * 1 - minute hand
+* Argument 3: adjustment value (seen values in range [-6:6])
+  * positive - clockwise
+  * negative counter-clockwise
+
+<details><summary>Examples</summary>
+<p>
 
 Minute hand clockwise adjust (+1)
 
@@ -254,3 +268,9 @@ Left dial hand counter-clockwise adjust
 Left dial hand clockwise adjust
 
 `814793020001` - `{ 71: [2,0,1] }`
+
+</p>
+</details>
+
+
+
