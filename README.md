@@ -102,7 +102,8 @@ On application layer protocol supports following commands:
 | 39 | [`auto_edst`](#auto_edst)|
 | 40 | [`dfu_ready`](#dfu_ready)|
 | 41 | [`config_debug`](#config_debug)|
-| 71 | [`command_71`](#command_71)
+| 52 | [`command_52`](#command_52)|
+| 71 | [`command_71`](#command_71)|
 
 
 ## `map_cmd`
@@ -209,6 +210,33 @@ Example: `811700` - `{23:0}`
 
 ## `dnd`
 
+Disable notifications in specified period
+
+* Argument 1: on/off
+* Argement 2: DND start hour
+* Argument 3: DND start minute
+* Argument 4: DND end hour
+* Argument 5: DND end minute
+
+ <details><summary>Examples</summary>
+<p>
+
+Set DND 22:00 - 06:00
+`8125950116000600` - `{37:[1,22,0,6,0]}`
+
+Set DND 23:00 - 06:00
+`8125950117000600` - `{37:[1,23,0,6,0]}`
+
+
+Set DND 23:00 - 06:05
+`8125950117000605` - `{37:[1,23,0,6,5]}`
+
+Unset DND 23:00 - 06:05
+`8125950017000605` - `{37:[0,23,0,6,5]}`
+
+</p>
+</details>
+
 ## `daylight`
 
 ## `auto_edst`
@@ -216,6 +244,9 @@ Example: `811700` - `{23:0}`
 ## `dfu_ready`
 
 ## `config_debug`
+
+## `command_52`
+
 
 ## `command_71`
 
