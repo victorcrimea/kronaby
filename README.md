@@ -22,36 +22,36 @@ I have Kronaby watch and I want to enhance the webhook triggering feature to the
 ## Watch can send events:
 
 * Top pusher
-  * Single short press `0x 81-08-92-00-01`
-  * Double short press `0x 81-08-92-00-03`
-  * Triple short press `0x 81-08-92-00-04`
-  * Quadruple short press `0x 81-08-92-00-05`
-  * Long press start `0x 81-08-92-00-02`
-  * Long press end `0x 81-08-92-00-0C`
-  * Single short + Long press start `0x 81-08-92-00-06`
-  * Double short press + Long press start `0x 81-08-92-00-07`
-  * Triple short press * Long press start `0x 81-08-92-00-08`
+  * Single short press `0x8108920001`
+  * Double short press `0x8108920003`
+  * Triple short press `0x8108920004`
+  * Quadruple short press `0x8108920005`
+  * Long press start `0x8108920002`
+  * Long press end `0x810892000C`
+  * Single short + Long press start `0x8108920006`
+  * Double short press + Long press start `0x8108920007`
+  * Triple short press * Long press start `0x8108920008`
 * Crown
-  * Single short press `0x 81-08-92-01-01`
-  * Double short press `0x 81-08-92-01-03`
-  * Triple short press `0x 81-08-92-01-04`
-  * Quadruple short press `0x 81-08-92-01-05`
-  * Long press start `0x 81-08-92-01-02`
-  * Find my phone `long press for 3 sec` `0x 81-08-92-01-0B`
-  * Long press end `0x 81-08-92-01-0C`
-  * Single short + Long press start `0x 81-08-92-01-06`
-  * Double short press + Long press start `0x 81-08-92-01-06`
-  * Triple short press * Long press start `0x 81-08-92-01-07`
+  * Single short press `0x8108920101`
+  * Double short press `0x8108920103`
+  * Triple short press `0x8108920104`
+  * Quadruple short press `0x81-08-92-01-05`
+  * Long press start `0x8108920102`
+  * Find my phone `long press for 3 sec` `0x810892010B`
+  * Long press end `0x810892010C`
+  * Single short + Long press start `0x8108920106`
+  * Double short press + Long press start `0x8108920106`
+  * Triple short press * Long press start `0x8108920107`
 * Bottom pusher
-  * Single short press `0x 81-08-92-02-01`
-  * Double short press `0x 81-08-92-02-03`
-  * Triple short press `0x 81-08-92-02-04`
-  * Quadruple short press `0x 81-08-92-02-05`
-  * Long press start `0x 81-08-92-02-02`
-  * Long press end `0x 81-08-92-01-0C`
-  * Single short + Long press start `0x 81-08-92-00-06`
-  * Double short press + Long press start `0x 81-08-92-02-06`
-  * Triple short press * Long press start `0x 81-08-92-02-07` 
+  * Single short press `0x8108920201`
+  * Double short press `0x8108920203`
+  * Triple short press `0x8108920204`
+  * Quadruple short press `0x8108920205`
+  * Long press start `0x8108920202`
+  * Long press end `0x810892010C`
+  * Single short + Long press start `0x8108920006`
+  * Double short press + Long press start `0x8108920206`
+  * Triple short press * Long press start `0x8108920207` 
 
 
 # 5. Protocol reference
