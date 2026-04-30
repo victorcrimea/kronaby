@@ -180,6 +180,23 @@ On application layer protocol supports following commands:
 
 ## `map_error`
 
+Maps error field IDs to their names.
+
+| ID | Field |
+| :--: | ----- |
+| 129 | `line_number` |
+| 130 | `file_name` |
+| 131 | `error_code` |
+| 132 | `r0` |
+| 133 | `r1` |
+| 134 | `r2` |
+| 135 | `r3` |
+| 136 | `r12` |
+| 137 | `sp` |
+| 138 | `lr` |
+| 139 | `pc` |
+| 140 | `psr` |
+
 ## `map_buildinfo`
 
 Maps build info field IDs to their names.
@@ -193,6 +210,54 @@ Maps build info field IDs to their names.
 | 83 | `device_name` |
 
 ## `map_diag`
+
+Maps diagnostic field IDs to their names.
+
+| ID | Field |
+| :--: | ----- |
+| 84 | `uptime_in_min` |
+| 85 | `runlevel` |
+| 86 | `num_of_button_presses` |
+| 87 | `num_of_button_events` |
+| 88 | `has_crashed` |
+| 89 | `num_of_crashes` |
+| 90 | `num_of_vibrator_starts` |
+| 91 | `sw_reset_reason` |
+| 92 | `hw_reset_reason` |
+| 93 | `num_of_failed_conn_int` |
+| 94 | `min_conn_interval` |
+| 95 | `max_conn_interval` |
+| 96 | `num_of_factory_resets` |
+| 97 | `battery_state` |
+| 98 | `batt_load_hourly_mv` |
+| 99 | `batt_load_daily_mv` |
+| 100 | `batt_load_avg_mv` |
+| 101 | `num_of_advertisement_periods` |
+| 102 | `time_compensation` |
+| 103 | `num_of_reboots` |
+| 104 | `task_watermark` |
+| 105 | `ci_integral_ever` |
+| 106 | `num_of_connections` |
+| 107 | `ci_time` |
+| 108 | `num_of_disconnects` |
+| 109 | `num_of_still_events` |
+| 110 | `num_of_get_up_events` |
+| 111 | `num_of_watch_unused` |
+| 112 | `num_of_repairings` |
+| 113 | `connection_state_data` |
+| 114 | `ticks_executed` |
+| 115 | `num_of_wakeups` |
+| 116 | `num_of_alarm_events` |
+| 117 | `num_of_ancs_notifications_today` |
+| 118 | `num_of_complication_uses` |
+| 119 | `max_complicationmgr_stack_depth` |
+| 120 | `num_of_acc_irqs` |
+| 121 | `num_of_accel_samples` |
+| 122 | `accel_active` |
+| 123 | `vibrator_on_in_ms` |
+| 124 | `batt_vib_min_mv` |
+| 125 | `batt_vib_min_temp` |
+| 126 | `batt_vib_latest_mv` |
 
 ## `map_settings`
 
@@ -271,6 +336,39 @@ Maps setting IDs to their names.
 
 ## `error`
 
+Watch-initiated notification sent when a command fails. Payload is a single integer error code.
+
+`{19: <error_code>}`
+
+Source: `com.animaconnected.watch.device.DeviceError` enum.
+
+| Code | Name |
+| ---: | ---- |
+| 0  | `NO_ERROR` |
+| 1  | `WRONG_NUMBER_OF_ARGS` |
+| 2  | `INVALID_ARGUMENT` |
+| 3  | `FAULTY_MSGPACK_FORMAT` |
+| 4  | `TEMPORARILY_OUT_OF_MEM_TRY_AGAIN` |
+| 5  | `BATTERY_CRITICAL` |
+| 6  | `BATTERY_WARNING` |
+| 7  | `BUFFER_TOO_SMALL` |
+| 8  | `STACK_OVERFLOW` |
+| 9  | `VIBRATOR_TEMP_OUT_OF_RANGE` |
+| 10 | `UNKNOWN_TESTCASE` |
+| 11 | `ON_STARTUP` |
+| 12 | `ANCS_FILTER_OVERFLOW` |
+| 13 | `DISPLAY_PARTIAL_LINE_RECEIVED` |
+| 14 | `DISPLAY_TOO_MUCH_DATA` |
+| 15 | `DISPLAY_FEED_NOT_STARTED` |
+| 16 | `DISPLAY_TRANSFER_ONGOING` |
+| 17 | `CALIBRATION_TIMEOUT` |
+| 18 | `CALIBRATION_INVALID_STATE` |
+| 19 | `POSTMORTEM_FLASH_FAILED` |
+| 20 | `INTERNAL` |
+| 21 | `POSTMORTEM_INVALID_STATE` |
+| 22 | `BATTERY_OK` |
+| 23 | `UNHANDLED_COMMAND` |
+
 ## `datetime`
 
 *Confirmed*: Sends date and time to the watch
@@ -319,6 +417,13 @@ Example: `811700` - `{23:0}`
 ## `button`
 
 ## `triggers`
+
+Sent before removing a button's program assignment. Always observed as `{34: [0,0]}` regardless of which button is being cleared. Likely resets face-level trigger state before the `comp_btn` unassign step.
+
+| Arg | Meaning | Observed values |
+| --- | ------- | --------------- |
+| 0 | unknown | 0 |
+| 1 | unknown | 0 |
 
 ## `btn_trigger`
 
@@ -381,7 +486,48 @@ Unset DND 23:00 - 06:05
 
 ## `alert_assign`
 
+Assigns notification types to vibration pattern slots. Phone → watch (SET only). Requires firmware >= 20170124.01.
+
+Payload: `{51: [bitmask_slot1, bitmask_slot2, bitmask_slot3]}` — or 6 elements on watches where `cap` field `0x11` is true.
+
+Each array element is a bitmask for one slot — the OR of all notification types assigned to it:
+
+| Bit | Value | Notification type |
+| --- | ----- | ----------------- |
+| 0 | `0x01` | Alarm |
+| 1 | `0x02` | Stillness reminder |
+| 2 | `0x04` | Step goal reached |
+| 3 | `0x08` | Incoming calls *(only when `cap` field `0x09` `CAP_SW_CALL_REPEATS_ALERT` is true)* |
+| 4 | `0x10` | Phone disconnect *(only when `cap` field `0x1b` `CAP_SW_DISCONNECT_ALERT` is true)* |
+
+Each notification type points to exactly one slot (1–6). A slot's bitmask is 0 if no notification types are assigned to it. Value 0 for a notification type's slot means unassigned/disabled.
+
+**Example** — alarm on slot 1, stillness on slot 2, step goal on slot 3, nothing on remaining slots:
+
+`{51: [0x01, 0x02, 0x04]}`
+
 ## `alert`
+
+Triggers a vibration + hand movement on the watch. Phone → watch (SET only).
+
+Payload: `{52: N}` where N is an alert ID from the `Alert` enum.
+
+Source: `com.animaconnected.watch.device.Alert` enum.
+
+| ID | Name | Usage |
+| --: | ---- | ----- |
+| 1 | `Pattern1` | Notification slot 1 vibration |
+| 2 | `Pattern2` | Notification slot 2 vibration |
+| 3 | `Pattern3` | Notification slot 3 vibration |
+| 4 | `Pattern4` | Notification slot 4 *(only on `hasSixAlerts` watches)* |
+| 5 | `Pattern5` | Notification slot 5 *(only on `hasSixAlerts` watches)* |
+| 6 | `Pattern6` | Notification slot 6 *(only on `hasSixAlerts` watches)* |
+| 7 | `Confirm` | Confirmation vibration (IFTTT trigger, camera shutter) |
+| 8 | `Failed` | Failure vibration *(present in enum, no observed call site)* |
+
+IDs 1–6 correspond directly to the slot indices from `alert_assign`. The app sends the slot ID that matches the arriving notification type's assignment.
+
+**Incoming call** repeats the assigned alert every 3 seconds for up to 90 seconds (30 repeats).
 
 ## `ancs_filter`
 
@@ -394,6 +540,68 @@ Unset DND 23:00 - 06:05
 ## `comp_def`
 
 ## `comp_btn`
+
+Assigns or removes a complication (program) from a button gesture on a specific dial face.
+
+Arguments: `[button_id, button_action_id, watch_face_id, internal_program_id]`
+
+**button_id** — physical button:
+
+| Value | Button |
+| ----- | ------ |
+| 0x00 | Top pusher |
+| 0x01 | Crown |
+| 0x02 | Bottom pusher |
+
+**button_action_id** — gesture on that button. Reuses the same action code as in BLE input event notifications (byte[3] of `0x810892...`):
+
+| Value | Gesture |
+| ----- | ------- |
+| 1 | Single short press |
+| 2 | Long press |
+| 3 | Double short press |
+| 4 | Triple short press |
+
+**watch_face_id** — which dial face:
+
+| Value | Face |
+| ----- | ---- |
+| 0 | Main dial |
+| 1 | First subdial |
+| 2 | Second subdial |
+
+> Only `watch_face_id=0` confirmed working. Sending `1` returns `{error: 2}` (`INVALID_ARGUMENT`) — subdial complication assignment may not be supported on this model (A1000).
+
+**internal_program_id** — complication to assign:
+
+| Value | Program |
+| ----- | ------- |
+| 0 | Date |
+| 4 | Daily Hundred |
+| 15 | *(unassign — removes current program)* |
+
+**Remove sequence:** always preceded by `{34: [0,0]}` (triggers reset), then `comp_btn` with `internal_program_id=15`.
+
+<details><summary>Examples</summary>
+<p>
+
+Assign Date to Crown X1 (single press, main dial):
+`{58: [1, 1, 0, 0]}`
+
+Assign Daily Hundred to Crown X1:
+`{58: [1, 1, 0, 4]}`
+
+Assign Date to Crown X2 (double press, main dial):
+`{58: [1, 3, 0, 0]}`
+
+Remove Crown X1 program:
+`{34: [0, 0]}` → `{58: [1, 1, 0, 15]}`
+
+Remove Crown X2 program:
+`{34: [0, 0]}` → `{58: [1, 3, 0, 15]}`
+
+</p>
+</details>
 
 ## `timezone`
 
