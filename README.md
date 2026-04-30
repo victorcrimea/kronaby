@@ -102,8 +102,43 @@ On application layer protocol supports following commands:
 | 39 | [`auto_edst`](#auto_edst)|
 | 40 | [`dfu_ready`](#dfu_ready)|
 | 41 | [`config_debug`](#config_debug)|
-| 52 | [`command_52`](#command_52)|
-| 71 | [`command_71`](#command_71)|
+| 42 | [`debug_hardfault`](#debug_hardfault)|
+| 43 | [`debug_apperror`](#debug_apperror)|
+| 44 | [`debug_watchdog`](#debug_watchdog)|
+| 45 | [`debug_disconnect`](#debug_disconnect)|
+| 46 | [`debug_rssi`](#debug_rssi)|
+| 47 | [`test`](#test)|
+| 48 | [`test_coil`](#test_coil)|
+| 49 | [`test_fcte`](#test_fcte)|
+| 50 | [`alarm`](#alarm)|
+| 51 | [`alert_assign`](#alert_assign)|
+| 52 | [`alert`](#alert)|
+| 53 | [`ancs_filter`](#ancs_filter)|
+| 54 | [`ancs_misuse`](#ancs_misuse)|
+| 55 | [`ancs_activity`](#ancs_activity)|
+| 56 | [`call`](#call)|
+| 57 | [`comp_def`](#comp_def)|
+| 58 | [`comp_btn`](#comp_btn)|
+| 59 | [`timezone`](#timezone)|
+| 60 | [`timezone2`](#timezone2)|
+| 61 | [`timezone3`](#timezone3)|
+| 62 | [`gmt_watch_tz`](#gmt_watch_tz)|
+| 63 | [`remote_data`](#remote_data)|
+| 64 | [`remote_data_config`](#remote_data_config)|
+| 65 | [`stopwatch`](#stopwatch)|
+| 66 | [`newyear`](#newyear)|
+| 67 | [`dice`](#dice)|
+| 68 | [`stepper_goto`](#stepper_goto)|
+| 69 | [`recalibrate`](#recalibrate)|
+| 70 | [`recalibrate_move`](#recalibrate_move)|
+| 71 | [`recalibrate_hand`](#recalibrate_hand)|
+| 72 | [`steps_target`](#steps_target)|
+| 73 | [`stillness`](#stillness)|
+| 74 | [`steps_now`](#steps_now)|
+| 75 | [`steps_day`](#steps_day)|
+| 76 | [`vibrator_start`](#vibrator_start)|
+| 77 | [`vibrator_end`](#vibrator_end)|
+| 78 | [`vibrator_config`](#vibrator_config)|
 
 
 ## `map_cmd`
@@ -147,9 +182,90 @@ On application layer protocol supports following commands:
 
 ## `map_buildinfo`
 
+Maps build info field IDs to their names.
+
+| ID | Field |
+| :--: | ----- |
+| 79 | `builder` |
+| 80 | `fw_version` |
+| 81 | `fw_type` |
+| 82 | `build_date` |
+| 83 | `device_name` |
+
 ## `map_diag`
 
 ## `map_settings`
+
+Maps setting IDs to their names.
+
+| ID | Setting |
+| :--: | ------- |
+| 141 | `battery_load_low_level` |
+| 142 | `battery_load_stop_level` |
+| 143 | `adv_fastest_timeout` |
+| 144 | `adv_fast_timeout` |
+| 145 | `adv_slow_timeout` |
+| 146 | `adv_fastest_interval` |
+| 147 | `adv_fast_interval` |
+| 148 | `adv_slow_interval` |
+| 149 | `skip_adv_after_minutes_motionless` |
+| 150 | `fastmode_timeout` |
+| 151 | `notify_timeout` |
+| 152 | `bt_conn_int_slow_min` |
+| 153 | `bt_conn_int_slow_max` |
+| 154 | `bt_conn_int_medium_min` |
+| 155 | `bt_conn_int_medium_max` |
+| 156 | `bt_conn_int_fast_min` |
+| 157 | `bt_conn_int_fast_max` |
+| 158 | `slave_latency` |
+| 159 | `forcecrash_enabled` |
+| 160 | `crash_on_error_enabled` |
+| 161 | `dfu_minimum_temperature` |
+| 162 | `factory_reset_timeout_ms` |
+| 163 | `button_active_timeout_ms` |
+| 164 | `long_press_timeout_ms` |
+| 165 | `ultra_long_press_timeout` |
+| 166 | `button_nth_press_timeout_ms` |
+| 167 | `trigger_volume_repeat_ms` |
+| 168 | `maximum_temperature` |
+| 169 | `minimum_temperature` |
+| 170 | `loglevel` |
+| 171 | `alarm_active_count` |
+| 172 | `alarm_active_time` |
+| 173 | `alarm_retry_time` |
+| 174 | `alarm_snooze_time` |
+| 175 | `alarm_max_retries` |
+| 176 | `alert_vibration_enabled` |
+| 177 | `alert_complication_enabled` |
+| 178 | `alert_exec_num_repeats` |
+| 179 | `alert_exec_delta_ms` |
+| 180 | `disconnect_vibrate_timeout` |
+| 181 | `maximum_ancs_notifications_per_day` |
+| 182 | `call_mute_enabled` |
+| 183 | `complication_alt_mode_timeout` |
+| 184 | `complication_steps_average_days` |
+| 185 | `complication_alert_timeout` |
+| 186 | `complication_stopwatch_pause_len` |
+| 187 | `complication_stopwatch_timeout` |
+| 188 | `stepper_recalibration_timeout` |
+| 189 | `accel_thresh_act` |
+| 190 | `accel_thresh_inact` |
+| 191 | `accel_time_inact_s` |
+| 192 | `stepcounter_peak_thresh` |
+| 193 | `stepcounter_min_ptp` |
+| 194 | `stepcounter_max_ptp` |
+| 195 | `stepcounter_min_peak_width` |
+| 196 | `stepcounter_max_peak_width` |
+| 197 | `stepcounter_first_step_hold_off` |
+| 198 | `stillness_steps_threshold` |
+| 199 | `stillness_attempts_in_complete_motionless` |
+| 200 | `nfc_detect_startup_delay_ms` |
+| 201 | `battery_nfc_boost_low_level` |
+| 202 | `battery_vib_low_level` |
+| 203 | `battery_vib_critical_level` |
+| 204 | `vibrator_ramp_up_ms` |
+| 205 | `vibrator_ramp_down_ms` |
+| 206 | `battery_iso7816_low_level` |
 
 ## `map_diag_event`
 
@@ -245,10 +361,65 @@ Unset DND 23:00 - 06:05
 
 ## `config_debug`
 
-## `command_52`
+## `debug_hardfault`
 
+## `debug_apperror`
 
-## `command_71`
+## `debug_watchdog`
+
+## `debug_disconnect`
+
+## `debug_rssi`
+
+## `test`
+
+## `test_coil`
+
+## `test_fcte`
+
+## `alarm`
+
+## `alert_assign`
+
+## `alert`
+
+## `ancs_filter`
+
+## `ancs_misuse`
+
+## `ancs_activity`
+
+## `call`
+
+## `comp_def`
+
+## `comp_btn`
+
+## `timezone`
+
+## `timezone2`
+
+## `timezone3`
+
+## `gmt_watch_tz`
+
+## `remote_data`
+
+## `remote_data_config`
+
+## `stopwatch`
+
+## `newyear`
+
+## `dice`
+
+## `stepper_goto`
+
+## `recalibrate`
+
+## `recalibrate_move`
+
+## `recalibrate_hand`
 
 Hand position adjustment.
 
@@ -303,5 +474,17 @@ Left dial hand clockwise adjust
 </p>
 </details>
 
+## `steps_target`
 
+## `stillness`
+
+## `steps_now`
+
+## `steps_day`
+
+## `vibrator_start`
+
+## `vibrator_end`
+
+## `vibrator_config`
 
