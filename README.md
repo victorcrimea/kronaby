@@ -743,6 +743,8 @@ Left dial hand clockwise adjust
 
 ## <a name="steps_target"></a>`steps_target` - cmd 72
 
+Daily step goal. Phone -> watch (SET only). `{72: N}` where `N` is the target step count (e.g. `10000`).
+
 ## <a name="stillness"></a>`stillness` - cmd 73
 
 **"Get moving"** reminder: watch vibrates if you haven't moved during your active day hours. Bidirectional. Phone configures it, watch reports state changes.
@@ -782,7 +784,24 @@ Disable:
 
 ## <a name="steps_now"></a>`steps_now` - cmd 74
 
+Step count notification. Watch -> phone only (unsolicited, not a response to a read). `{74: [steps, day_of_month]}`
+
+| Arg | Meaning |
+| --- | ------- |
+| 0 | `steps` - step count so far today |
+| 1 | `day_of_month` - day of month (1-31); app ignores the update if it doesn't match today |
+
+Example: `{74: [497, 1]}` - 497 steps, reported on the 1st of the month.
+
 ## <a name="steps_day"></a>`steps_day` - cmd 75
+
+Bidirectional. Read and write step count for a given day.
+
+**Phone -> watch (read request):** `{75: [day_of_month]}`
+
+**Watch -> phone (response):** `{75: [steps, day_of_month]}`
+
+**Phone -> watch (write):** `{75: [steps, day_of_month]}` - sets the stored step count. App uses this to clear the counter: `{75: [0, day_of_month]}`.
 
 ## <a name="vibrator_start"></a>`vibrator_start` - cmd 76
 
