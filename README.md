@@ -356,7 +356,6 @@ Watch-initiated notification sent when a command fails. Payload is a single inte
 
 `{19: <error_code>}`
 
-Source: `com.animaconnected.watch.device.DeviceError` enum.
 
 | Code | Name |
 | ---: | ---- |
@@ -682,6 +681,36 @@ Set to d12:
 
 ## <a name="stepper_goto"></a>`stepper_goto` - cmd 68
 
+Moves a watch hand to an arbitrary position. Movement is temporary (~3 sec), then the hand returns to its current time position.
+
+Arguments: `[hand_id, minutes]`
+
+**hand_id** - which hand to move (watch-model dependent):
+
+| Value | Hand |
+| ----- | ---- |
+| 0 | Main dial hour hand |
+| 1 | Main dial minute hand |
+| 2 | First subdial hand |
+| 3 | Second subdial hand |
+
+**minutes** - target position on the dial, 0-59. Maps directly to minute marks: 0 = 12 o'clock, 15 = 3 o'clock, 30 = 6 o'clock, 35 = 7 o'clock, 45 = 9 o'clock.
+
+<details><summary>Examples</summary>
+<p>
+
+Move hour hand to 12:
+`rw('81 44 92 00 00')` = `{68: [0, 0]}`
+
+Move hour hand to 7:
+`rw('81 44 92 00 23')` = `{68: [0, 35]}`
+
+Move minute hand to 6:
+`rw('81 44 92 01 1e')` = `{68: [1, 30]}`
+
+</p>
+</details>
+
 ## <a name="recalibrate"></a>`recalibrate` - cmd 69
 
 ## <a name="recalibrate_move"></a>`recalibrate_move` - cmd 70
@@ -805,13 +834,127 @@ Bidirectional. Read and write step count for a given day.
 
 ## <a name="vibrator_start"></a>`vibrator_start` - cmd 76
 
+Phone -> watch (SET only). Triggers vibration immediately.
+
+Two forms:
+
+**Built-in test pattern:** `{76: [0]}` - single-element array with value 0. The firmware plays its pre-programmed sequence.
+
+**Custom pattern:** `{76: [on_ms, off_ms, on_ms, ...]}` - alternating on/off durations in milliseconds.
+
+Custom pattern constraints (enforced client-side before sending):
+* Length must be odd, from 1 to 17
+* First element (on_ms) must be nonzero
+* Elements alternate: on-time, off-time, on-time, ...
+
+
+<details><summary>Examples</summary>
+<p>
+
+Built-in test pattern:
+
+`w('81 4c 91 00')`
+
+Single 150 ms buzz:
+
+`w('81 4c 91 cc 96')`
+
+Double buzz [125, 300, 125]:
+
+`w('81 4c 93 7d cd 01 2c 7d')`
+
+Triple buzz [125, 300, 125, 300, 125]:
+
+`w('81 4c 95 7d cd 01 2c 7d cd 01 2c 7d')`
+
+</p>
+</details>
+
 ## <a name="vibrator_end"></a>`vibrator_end` - cmd 77
+
+Phone -> watch (SET only). Stops an ongoing vibration.
+
+`{77: nil}` - no arguments.
+
+*Assumption*
+
+
+<details><summary>Examples</summary>
+<p>
+
+`w('81 4d c0')`
+
+</p>
+</details>
 
 ## <a name="vibrator_config"></a>`vibrator_config` - cmd 78
 
-Programs a vibration timing pattern into one firmware slot. Phone → watch (SET only).
+Programs a vibration timing pattern into one firmware slot. Phone -> watch (SET only).
 
-The app sends this command **3 times consecutively** - once per pattern slot (One, Two, Three) - during connection setup or when toggle switch "stronger vibrations" in watch settings.
+The app sends this command **3 times consecutively** - once per pattern slot (One, Two, Three) - during connection setup or when the "stronger vibrations" setting is toggled.
 
-Exact format stays obscure.
+**Format:** `{78: [slot_id, on_ms, ...]}`
+
+The first element is the slot ID. Remaining elements are the timing pattern (same alternating on/off format as `vibrator_start`).
+
+| Slot | ID |
+| ---- | -- |
+| One (single buzz) | 8 |
+| Two (double buzz) | 9 |
+| Three (triple buzz) | 10 |
+
+The pattern content depends on the vibrator motor type.
+
+**Normal vs Stronger array length**
+
+The motor has no power control - firmware can only switch it fully on or off. Normal strength is achieved through rapid on/off pulsing (PWM-style) to reduce average energy delivered. This requires many short elements (e.g. `[50, 25, 80, 25, 35, ...]` where 25 ms gaps are too short to feel as separate pulses). Stronger strength just runs the motor continuously per pulse (e.g. `[600]`), which needs far fewer elements. The 250-300 ms gaps in Stronger patterns are long enough to feel as distinct beats; the 25 ms gaps in Normal patterns are not.
+
+---
+
+**DeviceType BT001 / BT002 / BT003 (Kronaby Apex) - Normal:**
+
+| Slot | Pattern (ms) |
+| ---- | ------------ |
+| One | `[8, 50, 25, 80, 25, 35, 25, 35, 25, 40, 25, 90]` |
+| Two | `[9, 31, 30, 61, 30, 110, 300, 31, 30, 61, 30, 110]` |
+| Three | `[10, 31, 30, 190, 300, 50, 30, 90, 300, 50, 30, 90]` |
+
+**DeviceType BT001 / BT002 / BT003 (Kronaby Apex) - Stronger:**
+
+| Slot | Pattern (ms) |
+| ---- | ------------ |
+| One | `[8, 600]` |
+| Two | `[9, 400, 300, 400]` |
+| Three | `[10, 330, 250, 330, 250, 330]` |
+
+<details><summary>Captured examples (Apex 43mm, BT003)</summary>
+<p>
+
+Normal - Slot One:
+
+`81 4e 9c 08 32 19 50 19 23 19 23 19 28 19 5a`
+
+Normal - Slot Two:
+
+`81 4e 9c 09 1f 1e 3d 1e 6e d1 01 2c 1f 1e 3d 1e 6e`
+
+Normal - Slot Three:
+
+`81 4e 9c 0a 1f 1e cc be d1 01 2c 32 1e 5a d1 01 2c 32 1e 5a`
+
+Stronger - Slot One:
+
+`81 4e 92 08 d1 02 58`
+
+Stronger - Slot Two:
+
+`81 4e 94 09 d1 01 90 d1 01 2c d1 01 90`
+
+Stronger - Slot Three:
+
+`81 4e 96 0a d1 01 4a cc fa d1 01 4a cc fa d1 01 4a`
+
+</p>
+</details>
+
 
