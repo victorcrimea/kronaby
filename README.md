@@ -147,7 +147,7 @@ On application layer protocol supports following commands:
 
 Gets a main map of supported commands. May be more than 1 page.
 
- <details><summary>Examples</summary>
+<details><summary>Examples</summary>
 <p>
 
 Page 1 - write `0x92 00 d2 00 00 00 00`
@@ -412,6 +412,18 @@ Example: `811700` - `{23:0}`
 
 ## <a name="rssi"></a>`rssi` — cmd 25
 
+Ask watch to report it's RSSI reading.
+
+<details><summary>Examples</summary>
+<p>
+
+Ask - write `0xd2 00 00 00 19`
+
+then read from the same charachteristic, example: `81 19 d0 db` -37dB
+
+</p>
+</details>
+
 ## <a name="postmortem"></a>`postmortem` — cmd 26
 
 ## <a name="dump_uart"></a>`dump_uart` — cmd 27
@@ -636,6 +648,37 @@ Remove Crown X2 program:
 ## <a name="newyear"></a>`newyear` — cmd 66 *(obscure)*
 
 ## <a name="dice"></a>`dice` — cmd 67
+
+Configures the number of faces on the firmware-side dice complication. The dice rolls entirely on the watch, the app never sends this command.
+
+**Read face count:** write `{67: [0, 0]}` (paged GET), then read back response is `{67: N}`.
+
+**Set face count:** write `{67: N}`  subsequent dice rolls produce values in range 1–N.
+
+| N | Die |
+|--:|-----|
+| 2 | d2 (coin flip) |
+| 4 | d4 |
+| 6 | d6 (default) |
+| 8 | d8 |
+| 10 | d10 |
+| 12 | d12 |
+| 20 | d20 |
+
+<details><summary>Examples</summary>
+<p>
+
+Read current face count, write then read back:
+`rw('92 43 d2 00 00 00 00')` -> `81 43 06` = `{67: 6}` (default d6)
+
+Set to d2 (coin flip):
+`81 43 02`
+
+Set to d12:
+`81 43 0c`
+
+</p>
+</details>
 
 ## <a name="stepper_goto"></a>`stepper_goto` — cmd 68
 
