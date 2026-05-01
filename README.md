@@ -360,6 +360,11 @@ Maps setting IDs to their names.
 
 ## <a name="map_diag_event"></a>`map_diag_event` - cmd 18
 
+| ID | Data |
+| :--: | ------- |
+| 127 | `recalibration_delta` |
+| 128 | `volt_and_temp` |
+
 ## <a name="error"></a>`error` - cmd 19
 
 Watch-initiated notification sent when a command fails. Payload is a single integer error code.
