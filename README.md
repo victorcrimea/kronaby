@@ -143,13 +143,27 @@ On application layer protocol supports following commands:
 | 78 | [`vibrator_config`](#vibrator_config)|
 
 
-## `map_cmd`
+## <a name="map_cmd"></a>`map_cmd` — cmd 0
 
-## `onboarding_done`
+Gets a main map of supported commands. May be more than 1 page.
+
+ <details><summary>Examples</summary>
+<p>
+
+Page 1 - write `0x92 00 d2 00 00 00 00`
+
+then read from the same charachteristic
+
+</p>
+</details>
+
+
+
+## <a name="onboarding_done"></a>`onboarding_done` — cmd 1
 
 *Assumption*: Stops watch hands from continuous movement after pairing and connection.
 
-## `config_base`
+## <a name="config_base"></a>`config_base` — cmd 2
 *Assumption*: Sends list of 4 values to the watch:
 
 * Time resolution in minutes - integers
@@ -158,29 +172,29 @@ On application layer protocol supports following commands:
 * Unknown1 - boolean/integer
 * Unknown2 - boolean/integer
 
-## `status_buildinfo`
+## <a name="status_buildinfo"></a>`status_buildinfo` — cmd 3
 
-## `status_buildinfo_bl`
+## <a name="status_buildinfo_bl"></a>`status_buildinfo_bl` — cmd 4
 
-## `status_crash`
+## <a name="status_crash"></a>`status_crash` — cmd 5
 
-## `status_diag`
+## <a name="status_diag"></a>`status_diag` — cmd 6
 
-## `cap`
+## <a name="cap"></a>`cap` — cmd 7
 
-## `fastmode`
+## <a name="fastmode"></a>`fastmode` — cmd 8
 
-## `id_apperror`
+## <a name="id_apperror"></a>`id_apperror` — cmd 9
 
-## `id_error` *(obscure)*
+## <a name="id_error"></a>`id_error` — cmd 10 *(obscure)*
 
-## `id_hardfault` *(obscure)*
+## <a name="id_hardfault"></a>`id_hardfault` — cmd 11 *(obscure)*
 
-## `id_forced_hardfault` *(obscure)*
+## <a name="id_forced_hardfault"></a>`id_forced_hardfault` — cmd 12 *(obscure)*
 
-## `crash`
+## <a name="crash"></a>`crash` — cmd 13
 
-## `map_error`
+## <a name="map_error"></a>`map_error` — cmd 14
 
 Maps error field IDs to their names.
 
@@ -199,7 +213,7 @@ Maps error field IDs to their names.
 | 139 | `pc` |
 | 140 | `psr` |
 
-## `map_buildinfo`
+## <a name="map_buildinfo"></a>`map_buildinfo` — cmd 15
 
 Maps build info field IDs to their names.
 
@@ -211,7 +225,7 @@ Maps build info field IDs to their names.
 | 82 | `build_date` |
 | 83 | `device_name` |
 
-## `map_diag`
+## <a name="map_diag"></a>`map_diag` — cmd 16
 
 Maps diagnostic field IDs to their names.
 
@@ -261,7 +275,7 @@ Maps diagnostic field IDs to their names.
 | 125 | `batt_vib_min_temp` |
 | 126 | `batt_vib_latest_mv` |
 
-## `map_settings`
+## <a name="map_settings"></a>`map_settings` — cmd 17
 
 Maps setting IDs to their names.
 
@@ -334,9 +348,9 @@ Maps setting IDs to their names.
 | 205 | `vibrator_ramp_down_ms` |
 | 206 | `battery_iso7816_low_level` |
 
-## `map_diag_event`
+## <a name="map_diag_event"></a>`map_diag_event` — cmd 18
 
-## `error`
+## <a name="error"></a>`error` — cmd 19
 
 Watch-initiated notification sent when a command fails. Payload is a single integer error code.
 
@@ -371,7 +385,7 @@ Source: `com.animaconnected.watch.device.DeviceError` enum.
 | 22 | `BATTERY_OK` |
 | 23 | `UNHANDLED_COMMAND` |
 
-## `datetime`
+## <a name="datetime"></a>`datetime` — cmd 20
 
 *Confirmed*: Sends date and time to the watch
 
@@ -384,41 +398,41 @@ Source: `com.animaconnected.watch.device.DeviceError` enum.
 * day of week - 0 - 6
 
 
-## `weekly_sync` *(obscure)*
+## <a name="weekly_sync"></a>`weekly_sync` — cmd 21 *(obscure)*
 
-## `periodic` *(obscure)*
+## <a name="periodic"></a>`periodic` — cmd 22 *(obscure)*
 
-## `forget_device`
+## <a name="forget_device"></a>`forget_device` — cmd 23
 
 Tells watch to unpair from current phone
 
 Example: `811700` - `{23:0}`
 
-## `conn_int_change`
+## <a name="conn_int_change"></a>`conn_int_change` — cmd 24
 
-## `rssi`
+## <a name="rssi"></a>`rssi` — cmd 25
 
-## `postmortem`
+## <a name="postmortem"></a>`postmortem` — cmd 26
 
-## `dump_uart`
+## <a name="dump_uart"></a>`dump_uart` — cmd 27
 
-## `settings`
+## <a name="settings"></a>`settings` — cmd 28
 
-## `diag_event`
+## <a name="diag_event"></a>`diag_event` — cmd 29
 
-## `vbat` *(obscure)*
+## <a name="vbat"></a>`vbat` — cmd 30 *(obscure)*
 
 *Assumption*: Request battery voltage
 
-## `vbat_sim`
+## <a name="vbat_sim"></a>`vbat_sim` — cmd 31
 
 *Assumption*: Force watch to report specified voltage (**sim**ulate)
 
-## `upgrade_occurred` *(obscure)*
+## <a name="upgrade_occurred"></a>`upgrade_occurred` — cmd 32 *(obscure)*
 
-## `button`
+## <a name="button"></a>`button` — cmd 33
 
-## `triggers`
+## <a name="triggers"></a>`triggers` — cmd 34
 
 Sent before removing a button's program assignment. Always observed as `{34: [0,0]}` regardless of which button is being cleared. Likely resets face-level trigger state before the `comp_btn` unassign step.
 
@@ -427,11 +441,11 @@ Sent before removing a button's program assignment. Always observed as `{34: [0,
 | 0 | unknown | 0 |
 | 1 | unknown | 0 |
 
-## `btn_trigger` *(obscure)*
+## <a name="btn_trigger"></a>`btn_trigger` — cmd 35 *(obscure)*
 
-## `btn_feature` *(obscure)*
+## <a name="btn_feature"></a>`btn_feature` — cmd 36 *(obscure)*
 
-## `dnd`
+## <a name="dnd"></a>`dnd` — cmd 37
 
 Disable notifications in specified period
 
@@ -460,33 +474,33 @@ Unset DND 23:00 - 06:05
 </p>
 </details>
 
-## `daylight` *(obscure)*
+## <a name="daylight"></a>`daylight` — cmd 38 *(obscure)*
 
-## `auto_edst` *(obscure)*
+## <a name="auto_edst"></a>`auto_edst` — cmd 39 *(obscure)*
 
-## `dfu_ready`
+## <a name="dfu_ready"></a>`dfu_ready` — cmd 40
 
-## `config_debug`
+## <a name="config_debug"></a>`config_debug` — cmd 41
 
-## `debug_hardfault`
+## <a name="debug_hardfault"></a>`debug_hardfault` — cmd 42
 
-## `debug_apperror`
+## <a name="debug_apperror"></a>`debug_apperror` — cmd 43
 
-## `debug_watchdog` *(obscure)*
+## <a name="debug_watchdog"></a>`debug_watchdog` — cmd 44 *(obscure)*
 
-## `debug_disconnect`
+## <a name="debug_disconnect"></a>`debug_disconnect` — cmd 45
 
-## `debug_rssi`
+## <a name="debug_rssi"></a>`debug_rssi` — cmd 46
 
-## `test`
+## <a name="test"></a>`test` — cmd 47
 
-## `test_coil`
+## <a name="test_coil"></a>`test_coil` — cmd 48
 
-## `test_fcte`
+## <a name="test_fcte"></a>`test_fcte` — cmd 49
 
-## `alarm`
+## <a name="alarm"></a>`alarm` — cmd 50
 
-## `alert_assign`
+## <a name="alert_assign"></a>`alert_assign` — cmd 51
 
 Assigns notification types to vibration pattern slots. Phone → watch (SET only). Requires firmware >= 20170124.01.
 
@@ -508,7 +522,7 @@ Each notification type points to exactly one slot (1–6). A slot's bitmask is 0
 
 `{51: [0x01, 0x02, 0x04]}`
 
-## `alert`
+## <a name="alert"></a>`alert` — cmd 52
 
 Triggers a vibration + hand movement on the watch. Phone → watch (SET only).
 
@@ -531,17 +545,17 @@ IDs 1–6 correspond directly to the slot indices from `alert_assign`. The app s
 
 **Incoming call** repeats the assigned alert every 3 seconds for up to 90 seconds (30 repeats).
 
-## `ancs_filter`
+## <a name="ancs_filter"></a>`ancs_filter` — cmd 53
 
-## `ancs_misuse` *(obscure)*
+## <a name="ancs_misuse"></a>`ancs_misuse` — cmd 54 *(obscure)*
 
-## `ancs_activity` *(obscure)*
+## <a name="ancs_activity"></a>`ancs_activity` — cmd 55 *(obscure)*
 
-## `call`
+## <a name="call"></a>`call` — cmd 56
 
-## `comp_def`
+## <a name="comp_def"></a>`comp_def` — cmd 57
 
-## `comp_btn`
+## <a name="comp_btn"></a>`comp_btn` — cmd 58
 
 Assigns or removes a complication (program) from a button gesture on a specific dial face.
 
@@ -605,31 +619,31 @@ Remove Crown X2 program:
 </p>
 </details>
 
-## `timezone`
+## <a name="timezone"></a>`timezone` — cmd 59
 
-## `timezone2` *(obscure)*
+## <a name="timezone2"></a>`timezone2` — cmd 60 *(obscure)*
 
-## `timezone3` *(obscure)*
+## <a name="timezone3"></a>`timezone3` — cmd 61 *(obscure)*
 
-## `gmt_watch_tz` *(obscure)*
+## <a name="gmt_watch_tz"></a>`gmt_watch_tz` — cmd 62 *(obscure)*
 
-## `remote_data`
+## <a name="remote_data"></a>`remote_data` — cmd 63
 
-## `remote_data_config`
+## <a name="remote_data_config"></a>`remote_data_config` — cmd 64
 
-## `stopwatch`
+## <a name="stopwatch"></a>`stopwatch` — cmd 65
 
-## `newyear` *(obscure)*
+## <a name="newyear"></a>`newyear` — cmd 66 *(obscure)*
 
-## `dice`
+## <a name="dice"></a>`dice` — cmd 67
 
-## `stepper_goto`
+## <a name="stepper_goto"></a>`stepper_goto` — cmd 68
 
-## `recalibrate`
+## <a name="recalibrate"></a>`recalibrate` — cmd 69
 
-## `recalibrate_move`
+## <a name="recalibrate_move"></a>`recalibrate_move` — cmd 70
 
-## `recalibrate_hand`
+## <a name="recalibrate_hand"></a>`recalibrate_hand` — cmd 71
 
 Hand position adjustment.
 
@@ -684,19 +698,19 @@ Left dial hand clockwise adjust
 </p>
 </details>
 
-## `steps_target`
+## <a name="steps_target"></a>`steps_target` — cmd 72
 
-## `stillness`
+## <a name="stillness"></a>`stillness` — cmd 73
 
-## `steps_now`
+## <a name="steps_now"></a>`steps_now` — cmd 74
 
-## `steps_day`
+## <a name="steps_day"></a>`steps_day` — cmd 75
 
-## `vibrator_start`
+## <a name="vibrator_start"></a>`vibrator_start` — cmd 76
 
-## `vibrator_end`
+## <a name="vibrator_end"></a>`vibrator_end` — cmd 77
 
-## `vibrator_config`
+## <a name="vibrator_config"></a>`vibrator_config` — cmd 78
 
 Programs a vibration timing pattern into one firmware slot. Phone → watch (SET only).
 
