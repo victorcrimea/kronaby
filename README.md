@@ -164,13 +164,23 @@ then read from the same charachteristic
 *Assumption*: Stops watch hands from continuous movement after pairing and connection.
 
 ## <a name="config_base"></a>`config_base` - cmd 2
-*Assumption*: Sends list of 4 values to the watch:
 
-* Time resolution in minutes - integers
-	*Assumption*: period between sending steps count from watch to phone
-* Enable step counter - boolean
-* Unknown1 - boolean/integer
-* Unknown2 - boolean/integer
+Phone -> watch (SET only). Sends 2 integers on every connection during sync.
+
+`{2: [interval, enabled]}`
+
+| Arg | Name | Value | Meaning |
+| --- | ---- | ----- | ------- |
+| 0 | `interval` | `10` | Step reporting interval in minutes - how often the watch pushes a `steps_now` update |
+| 1 | `enabled` | `1` | Step counter enabled (1 = on) |
+
+<details><summary>Example</summary>
+<p>
+
+`81 02 92 0a 01` = `{2: [10, 1]}`
+
+</p>
+</details>
 
 ## <a name="status_buildinfo"></a>`status_buildinfo` - cmd 3
 
