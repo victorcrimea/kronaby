@@ -58,6 +58,8 @@ I have Kronaby watch and I want to enhance the webhook triggering feature to the
 
 On application layer protocol supports following commands:
 
+> **Obscure** — command name appears in the watch's `map_cmd` bootstrap dictionary but has never been observed on BLE traffic.
+
 | Code | Command |
 | :----: | ------- |
 | 0  | [`map_cmd`](#map_cmd) |
@@ -70,9 +72,9 @@ On application layer protocol supports following commands:
 | 7  | [`cap`](#cap)|
 | 8  | [`fastmode`](#fastmode)|
 | 9  | [`id_apperror`](#id_apperror)|
-| 10 | [`id_error`](#id_error)|
-| 11 | [`id_hardfault`](#id_hardfault)|
-| 12 | [`id_forced_hardfault`](#id_forced_hardfault)|
+| 10 | [`id_error`](#id_error) *(obscure)*|
+| 11 | [`id_hardfault`](#id_hardfault) *(obscure)*|
+| 12 | [`id_forced_hardfault`](#id_forced_hardfault) *(obscure)*|
 | 13 | [`crash`](#crash)|
 | 14 | [`map_error`](#map_error)|
 | 15 | [`map_buildinfo`](#map_buildinfo)|
@@ -81,8 +83,8 @@ On application layer protocol supports following commands:
 | 18 | [`map_diag_event`](#map_diag_event)|
 | 19 | [`error`](#error)|
 | 20 | [`datetime`](#datetime)|
-| 21 | [`weekly_sync`](#weekly_sync)|
-| 22 | [`periodic`](#periodic)|
+| 21 | [`weekly_sync`](#weekly_sync) *(obscure)*|
+| 22 | [`periodic`](#periodic) *(obscure)*|
 | 23 | [`forget_device`](#forget_device)|
 | 24 | [`conn_int_change`](#conn_int_change)|
 | 25 | [`rssi`](#rssi)|
@@ -90,21 +92,21 @@ On application layer protocol supports following commands:
 | 27 | [`dump_uart`](#dump_uart)|
 | 28 | [`settings`](#settings)|
 | 29 | [`diag_event`](#diag_event)|
-| 30 | [`vbat`](#vbat)|
+| 30 | [`vbat`](#vbat) *(obscure)*|
 | 31 | [`vbat_sim`](#vbat_sim)|
-| 32 | [`upgrade_occurred`](#upgrade_occurred)|
+| 32 | [`upgrade_occurred`](#upgrade_occurred) *(obscure)*|
 | 33 | [`button`](#button)|
 | 34 | [`triggers`](#triggers)|
-| 35 | [`btn_trigger`](#btn_trigger)|
-| 36 | [`btn_feature`](#btn_feature)|
+| 35 | [`btn_trigger`](#btn_trigger) *(obscure)*|
+| 36 | [`btn_feature`](#btn_feature) *(obscure)*|
 | 37 | [`dnd`](#dnd)|
-| 38 | [`daylight`](#daylight)|
-| 39 | [`auto_edst`](#auto_edst)|
+| 38 | [`daylight`](#daylight) *(obscure)*|
+| 39 | [`auto_edst`](#auto_edst) *(obscure)*|
 | 40 | [`dfu_ready`](#dfu_ready)|
 | 41 | [`config_debug`](#config_debug)|
 | 42 | [`debug_hardfault`](#debug_hardfault)|
 | 43 | [`debug_apperror`](#debug_apperror)|
-| 44 | [`debug_watchdog`](#debug_watchdog)|
+| 44 | [`debug_watchdog`](#debug_watchdog) *(obscure)*|
 | 45 | [`debug_disconnect`](#debug_disconnect)|
 | 46 | [`debug_rssi`](#debug_rssi)|
 | 47 | [`test`](#test)|
@@ -114,19 +116,19 @@ On application layer protocol supports following commands:
 | 51 | [`alert_assign`](#alert_assign)|
 | 52 | [`alert`](#alert)|
 | 53 | [`ancs_filter`](#ancs_filter)|
-| 54 | [`ancs_misuse`](#ancs_misuse)|
-| 55 | [`ancs_activity`](#ancs_activity)|
+| 54 | [`ancs_misuse`](#ancs_misuse) *(obscure)*|
+| 55 | [`ancs_activity`](#ancs_activity) *(obscure)*|
 | 56 | [`call`](#call)|
 | 57 | [`comp_def`](#comp_def)|
 | 58 | [`comp_btn`](#comp_btn)|
 | 59 | [`timezone`](#timezone)|
-| 60 | [`timezone2`](#timezone2)|
-| 61 | [`timezone3`](#timezone3)|
-| 62 | [`gmt_watch_tz`](#gmt_watch_tz)|
+| 60 | [`timezone2`](#timezone2) *(obscure)*|
+| 61 | [`timezone3`](#timezone3) *(obscure)*|
+| 62 | [`gmt_watch_tz`](#gmt_watch_tz) *(obscure)*|
 | 63 | [`remote_data`](#remote_data)|
 | 64 | [`remote_data_config`](#remote_data_config)|
 | 65 | [`stopwatch`](#stopwatch)|
-| 66 | [`newyear`](#newyear)|
+| 66 | [`newyear`](#newyear) *(obscure)*|
 | 67 | [`dice`](#dice)|
 | 68 | [`stepper_goto`](#stepper_goto)|
 | 69 | [`recalibrate`](#recalibrate)|
@@ -170,11 +172,11 @@ On application layer protocol supports following commands:
 
 ## `id_apperror`
 
-## `id_error`
+## `id_error` *(obscure)*
 
-## `id_hardfault`
+## `id_hardfault` *(obscure)*
 
-## `id_forced_hardfault`
+## `id_forced_hardfault` *(obscure)*
 
 ## `crash`
 
@@ -382,9 +384,9 @@ Source: `com.animaconnected.watch.device.DeviceError` enum.
 * day of week - 0 - 6
 
 
-## `weekly_sync`
+## `weekly_sync` *(obscure)*
 
-## `periodic`
+## `periodic` *(obscure)*
 
 ## `forget_device`
 
@@ -404,7 +406,7 @@ Example: `811700` - `{23:0}`
 
 ## `diag_event`
 
-## `vbat`
+## `vbat` *(obscure)*
 
 *Assumption*: Request battery voltage
 
@@ -412,7 +414,7 @@ Example: `811700` - `{23:0}`
 
 *Assumption*: Force watch to report specified voltage (**sim**ulate)
 
-## `upgrade_occurred`
+## `upgrade_occurred` *(obscure)*
 
 ## `button`
 
@@ -425,9 +427,9 @@ Sent before removing a button's program assignment. Always observed as `{34: [0,
 | 0 | unknown | 0 |
 | 1 | unknown | 0 |
 
-## `btn_trigger`
+## `btn_trigger` *(obscure)*
 
-## `btn_feature`
+## `btn_feature` *(obscure)*
 
 ## `dnd`
 
@@ -458,9 +460,9 @@ Unset DND 23:00 - 06:05
 </p>
 </details>
 
-## `daylight`
+## `daylight` *(obscure)*
 
-## `auto_edst`
+## `auto_edst` *(obscure)*
 
 ## `dfu_ready`
 
@@ -470,7 +472,7 @@ Unset DND 23:00 - 06:05
 
 ## `debug_apperror`
 
-## `debug_watchdog`
+## `debug_watchdog` *(obscure)*
 
 ## `debug_disconnect`
 
@@ -531,9 +533,9 @@ IDs 1–6 correspond directly to the slot indices from `alert_assign`. The app s
 
 ## `ancs_filter`
 
-## `ancs_misuse`
+## `ancs_misuse` *(obscure)*
 
-## `ancs_activity`
+## `ancs_activity` *(obscure)*
 
 ## `call`
 
@@ -605,11 +607,11 @@ Remove Crown X2 program:
 
 ## `timezone`
 
-## `timezone2`
+## `timezone2` *(obscure)*
 
-## `timezone3`
+## `timezone3` *(obscure)*
 
-## `gmt_watch_tz`
+## `gmt_watch_tz` *(obscure)*
 
 ## `remote_data`
 
@@ -617,7 +619,7 @@ Remove Crown X2 program:
 
 ## `stopwatch`
 
-## `newyear`
+## `newyear` *(obscure)*
 
 ## `dice`
 
@@ -695,4 +697,10 @@ Left dial hand clockwise adjust
 ## `vibrator_end`
 
 ## `vibrator_config`
+
+Programs a vibration timing pattern into one firmware slot. Phone → watch (SET only).
+
+The app sends this command **3 times consecutively** — once per pattern slot (One, Two, Three) — during connection setup or when toggle switch "stronger vibrations" in watch settings.
+
+Exact format stays obscure.
 
