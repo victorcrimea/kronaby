@@ -19,7 +19,7 @@ I have Kronaby watch and I want to enhance the webhook triggering feature to the
 
 # 4. Observation
 
-Watch can send button events. See [`button`](#button) cmd 33.
+Different firmwares/watch versions may use different command IDs for the same commands. Because of that it is important to query map_cmd (which is always at ID 0) to get correct mapping between command name and its id. It is the first thing that official application does after watch pairing. Shown command IDs are valid for Apex with firmware `20180911.01.03`.
 
 # 5. Protocol reference
 
