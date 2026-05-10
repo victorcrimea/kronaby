@@ -19,40 +19,7 @@ I have Kronaby watch and I want to enhance the webhook triggering feature to the
 
 # 4. Observation
 
-## Watch can send events:
-
-* Top pusher
-  * Single short press `0x8108920001`
-  * Double short press `0x8108920003`
-  * Triple short press `0x8108920004`
-  * Quadruple short press `0x8108920005`
-  * Long press start `0x8108920002`
-  * Long press end `0x810892000C`
-  * Single short + Long press start `0x8108920006`
-  * Double short press + Long press start `0x8108920007`
-  * Triple short press * Long press start `0x8108920008`
-* Crown
-  * Single short press `0x8108920101`
-  * Double short press `0x8108920103`
-  * Triple short press `0x8108920104`
-  * Quadruple short press `0x81-08-92-01-05`
-  * Long press start `0x8108920102`
-  * Find my phone `long press for 3 sec` `0x810892010B`
-  * Long press end `0x810892010C`
-  * Single short + Long press start `0x8108920106`
-  * Double short press + Long press start `0x8108920106`
-  * Triple short press * Long press start `0x8108920107`
-* Bottom pusher
-  * Single short press `0x8108920201`
-  * Double short press `0x8108920203`
-  * Triple short press `0x8108920204`
-  * Quadruple short press `0x8108920205`
-  * Long press start `0x8108920202`
-  * Long press end `0x810892010C`
-  * Single short + Long press start `0x8108920006`
-  * Double short press + Long press start `0x8108920206`
-  * Triple short press * Long press start `0x8108920207` 
-
+Watch can send button events. See [`button`](#button) cmd 33.
 
 # 5. Protocol reference
 
@@ -457,6 +424,76 @@ then read from the same charachteristic, example: `81 19 d0 db` -37dB
 ## <a name="upgrade_occurred"></a>`upgrade_occurred` - cmd 32 *(obscure)*
 
 ## <a name="button"></a>`button` - cmd 33
+
+Watch sends a button event whenever a physical button (top pusher, crown, bottom pusher) is pressed.
+
+Body: `[buttonId, gestureId]`.
+
+| `buttonId` | Button |
+| :--: | ------ |
+| 0 | Top pusher |
+| 1 | Crown |
+| 2 | Bottom pusher |
+
+| `gestureId` | Gesture                                           |
+| :--: |---------------------------------------------------|
+| 1 | Single short press                                |
+| 2 | Long press start                                  |
+| 3 | Double short press                                |
+| 4 | Triple short press                                |
+| 5 | Quadruple short press                             |
+| 6 | Single short + Long press start                   |
+| 7 | Double short press + Long press start             |
+| 8 | Triple short press + Long press start             |
+| 11 | Find my phone (crown only - long press for 3 sec) |
+| 12 | Long press end                                    |
+
+<details>
+<summary>Full opcode list</summary>
+
+#### Top pusher (`buttonId = 0`)
+
+| Gesture                               | Msgpack | Hex |
+|---------------------------------------| ------- | --- |
+| Single short press                    | `{33: [0, 1]}` | `0x8121920001` |
+| Double short press                    | `{33: [0, 3]}` | `0x8121920003` |
+| Triple short press                    | `{33: [0, 4]}` | `0x8121920004` |
+| Quadruple short press                 | `{33: [0, 5]}` | `0x8121920005` |
+| Long press start                      | `{33: [0, 2]}` | `0x8121920002` |
+| Long press end                        | `{33: [0, 12]}` | `0x812192000C` |
+| Single short + Long press start       | `{33: [0, 6]}` | `0x8121920006` |
+| Double short press + Long press start | `{33: [0, 7]}` | `0x8121920007` |
+| Triple short press + Long press start | `{33: [0, 8]}` | `0x8121920008` |
+
+#### Crown (`buttonId = 1`)
+
+| Gesture                               | Msgpack | Hex |
+|---------------------------------------| ------- | --- |
+| Single short press                    | `{33: [1, 1]}` | `0x8121920101` |
+| Double short press                    | `{33: [1, 3]}` | `0x8121920103` |
+| Triple short press                    | `{33: [1, 4]}` | `0x8121920104` |
+| Quadruple short press                 | `{33: [1, 5]}` | `0x8121920105` |
+| Long press start                      | `{33: [1, 2]}` | `0x8121920102` |
+| Find my phone (long press for 3 sec)  | `{33: [1, 11]}` | `0x812192010B` |
+| Long press end                        | `{33: [1, 12]}` | `0x812192010C` |
+| Single short + Long press start       | `{33: [1, 6]}` | `0x8121920106` |
+| Double short press + Long press start | `{33: [1, 7]}` | `0x8121920107` |
+| Triple short press + Long press start | `{33: [1, 8]}` | `0x8121920108` |
+
+#### Bottom pusher (`buttonId = 2`)
+
+| Gesture                               | Msgpack | Hex |
+|---------------------------------------| ------- | --- |
+| Single short press                    | `{33: [2, 1]}` | `0x8121920201` |
+| Double short press                    | `{33: [2, 3]}` | `0x8121920203` |
+| Triple short press                    | `{33: [2, 4]}` | `0x8121920204` |
+| Quadruple short press                 | `{33: [2, 5]}` | `0x8121920205` |
+| Long press start                      | `{33: [2, 2]}` | `0x8121920202` |
+| Long press end                        | `{33: [2, 12]}` | `0x812192020C` |
+| Single short + Long press start       | `{33: [2, 6]}` | `0x8121920206` |
+| Double short press + Long press start | `{33: [2, 7]}` | `0x8121920207` |
+| Triple short press + Long press start | `{33: [2, 8]}` | `0x8121920208` |
+</details>
 
 ## <a name="triggers"></a>`triggers` - cmd 34
 
