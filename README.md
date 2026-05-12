@@ -563,6 +563,55 @@ Unset DND 23:00 - 06:05
 
 ## <a name="alarm"></a>`alarm` - cmd 50
 
+Configures the alarm list for the silent alarm feature. The phone sends the full list of active alarms on every change.
+The watch also reports alarm lifecycle events back to the phone on the same cmd id.
+
+The UI is capped to 8 alarms in total, but you are actually able to have 10 total. 
+
+**Phone -> Watch:** `{50: [hour, minute, mask, hour, minute, mask, ...]}`
+
+| Field | Range     | Meaning |
+| ----- |-----------| ------- |
+| `hour` | 0-23      | 24-hour format. No AM/PM bit. |
+| `minute` | 0-59      | |
+| `mask` | 0x00-0xff | Weekday bitmask (see below). |
+
+**Weekday bitmask:**
+
+| Bit | Value | Day                                     |
+| --- | ----- |-----------------------------------------|
+| 0 | `0x01` | (unknown, always 0 in observed traffic) |
+| 1 | `0x02` | Monday                                  |
+| 2 | `0x04` | Tuesday                                 |
+| 3 | `0x08` | Wednesday                               |
+| 4 | `0x10` | Thursday                                |
+| 5 | `0x20` | Friday                                  |
+| 6 | `0x40` | Saturday                                |
+| 7 | `0x80` | Sunday                                  |
+
+Common values: `0xfe` = every day, `0x3e` = Mon-Fri, `0xc0` = Sat+Sun, `0x80` = Sun only.
+
+<details><summary>Examples</summary>
+<p>
+
+Single alarm at 4:25 every day: `81 32 93 04 19 cc fe` = `{50: [4, 25, 254]}`
+
+Two alarms - 4:25 every day, plus 20:42 Mon+Wed: `81 32 96 04 19 cc fe 14 2a cc 0a` = `{50: [4, 25, 254, 20, 42, 10]}`
+
+</p>
+</details>
+
+**Watch -> Phone (alarm event):** `{50: N}` - single integer reporting alarm lifecycle.
+
+| N | Meaning                                           |
+|--:|---------------------------------------------------|
+| 0 | Alarm started ringing                             |
+| 1 | obscure                                           |
+| 2 | Ring timed out (watch will retry after ~1 minute) |
+| 3 | User snoozed the alarm                            |
+| 4 | User stopped the alarm                            |
+| 5 | Retry ring timed out (no further retries)         |
+
 ## <a name="alert_assign"></a>`alert_assign` - cmd 51
 
 Assigns notification types to vibration pattern slots. Phone → watch (SET only). Requires firmware >= 20170124.01.
