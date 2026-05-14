@@ -640,8 +640,6 @@ Triggers a vibration + hand movement on the watch. Phone → watch (SET only).
 
 Payload: `{52: N}` where N is an alert ID from the `Alert` enum.
 
-Source: `com.animaconnected.watch.device.Alert` enum.
-
 | ID | Name | Usage |
 | --: | ---- | ----- |
 | 1 | `Pattern1` | Notification slot 1 vibration |
